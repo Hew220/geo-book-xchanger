@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+
+  mysql-standalone:
+    image: mysql:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=newdb
+      - MYSQL_USER=springuser
+      - MYSQL_PASSWORD=ThePassword
+    ports:
+      - "3307:3306"
+
+  restapi-test:
+    image: restapi_image
+    depends_on:
+      - mysql-standalone
+    volumes:
+      - /d/gitClonedProjects:/tmp/log
+    ports:
+      - "8090:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-standalone:3306/newdb?allowPublicKeyRetrieval=true&useSSL=false
+      - SPRING_DATASOURCE_USERNAME=springuser
+      - SPRING_DATASOURCE_PASSWORD=ThePassword
+      - SPRING_ACTIVE_PROFILE=h2
+      - APP_LOGGING_FOLDER=/tmp/log

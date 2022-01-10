@@ -1,0 +1,43 @@
+Configuration:
+  status: warn
+
+  Properties:
+    Property:
+      - name: basePath
+        value: '$${env:APP_LOG_ROOT:D:\gitClonedProjects}'
+      - name: rootLogLevel
+        value: '$${env:APP_LOGGING_LOGLEVEL:-debug}'
+
+  Appenders:
+    Console:
+      name: Console
+      target: SYSTEM_OUT
+      PatternLayout:
+        Pattern: '%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger{36} [%X{serviceName}] - %msg%n'
+    RollingFile:
+      name: StdOutRollingFile
+      fileName: ${basePath}/rest-api-project-stdout.log
+      filePattern: ${basePath}/rest-api-project-stdout-%d{yyyy-MM-dd}-%i.log.gz
+      PatternLayout:
+         Pattern: '%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger{36} [%X{serviceName}] - %msg%n'
+      Policies:
+         TimeBasedTriggeringPolicy:
+           interval: 1
+           modulate: true
+           maxRandomDelay: 3
+         SizeBasedTriggeringPolicy:
+           size: '10 MB'
+
+  Loggers:
+    Root:
+      level: ${rootLogLevel}
+      AppenderRef:
+      - ref: Console
+      - ref: StdOutRollingFile
+    Logger:
+      - name: com.howtodoinjava.app
+        additivity: false
+        level: debug
+        AppenderRef:
+          - ref: Console
+          - ref: StdOutRollingFile
