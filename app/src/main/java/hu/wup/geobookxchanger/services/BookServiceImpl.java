@@ -8,6 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,12 +26,14 @@ public class BookServiceImpl implements BookService {
 
 
     @Override
-    public Iterable<Book> getAllBooks() {
-        return bookRepository.findAll();
+    public List<Book> getAllBooks() {
+        List<Book> bookList = new ArrayList<>();
+        bookRepository.findAll().iterator().forEachRemaining(bookList::add);
+        return bookList;
     }
 
     @Override
-    public Book getBookById(long id)  {
+    public Book getBookById(Long id)  {
         Optional<Book> bookOptional = bookRepository.findById(id);
         Book book;
         if(bookOptional.isPresent()) {

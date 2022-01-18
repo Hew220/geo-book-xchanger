@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface BookService {
 
-    Iterable<Book> getAllBooks();
+    List<Book> getAllBooks();
 
-    Book getBookById(long id);
+    Book getBookById(Long id);
 
     Book getBookByTitle(String title);
 

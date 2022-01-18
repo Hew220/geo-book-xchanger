@@ -1,0 +1,155 @@
+swagger: "2.0"
+info:
+  version: '1.0'
+  title: General Api
+  description: 'Contract for the application'
+
+host: localhost:8080
+
+
+
+paths:
+  /add:
+    post:
+      summary: Populates Book to the Database
+      tags:
+        - book
+      description: The purpose of the function is to accept an a request in json format and populates it
+       to the DB as ajava object
+      operationId: addNewBook
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: book
+          description: the book to create.
+          schema:
+            $ref: '#/definitions/Book'
+      responses:
+        '200':
+          description: Book is being successfully populated to the database
+          schema:
+            $ref: '#/definitions/Book'
+  /getbook/{bookId}:
+    get:
+      tags:
+        - book
+      summary: Returns a Book based on its id value
+      description: This function sends back a Book object requested based on its id value
+      operationId: getBookById
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: bookId
+          type: integer
+          format: int64
+          description: the id of the object
+          required: true
+      responses:
+        '200':
+          description: status code along with the requested object is being send back in json format
+          schema:
+            $ref: '#/definitions/Book'
+  /all:
+    get:
+      tags:
+        - book
+      summary: Get list of Books
+      description: This function returns a list of Books
+      operationId: getAllUsers
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: status code along with the requested list of books is being send back in json format
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Book'
+  /delete/{bookId}:
+    delete:
+      tags:
+        - book
+      summary: Delete Book from DB
+      description: This function deletes the Book object from the corresponding database
+      operationId: deleteBook
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: bookId
+          type: integer
+          format: int64
+          description: the id of the object to be deleted
+          required: true
+      responses:
+        "201":
+          description: status code 201 returned indicates that the transactions was succesful but no response needed
+          schema:
+            $ref: '#/definitions/Book'
+  /update/{bookId}:
+    put:
+      tags:
+        - book
+      summary: update an existing record
+      description: This fucnion updates an existing Book object based on its id value
+      operationId: updateBook
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: bookId
+          type: integer
+          format: int64
+          description: the id of the object to be updated
+          required: true
+        - in: body
+          name: book
+          description: the Book object that you'll update your DB record with
+          schema:
+            $ref: '#/definitions/Book'
+      responses:
+        "200":
+          description: status code along with the updated book retuns in json format
+          schema:
+            $ref: '#/definitions/Book'
+  /sortbookbytitle:
+    get:
+      tags:
+        - book
+      summary: returns a list of Books asc/desc order
+      description: This function returns a list of books sorted by title either ascending or descending order
+      operationId: sortBooksByTitle
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: title
+          type: string
+          required: true
+          description: query parameter which can be either asc or desc indicating the direction of the ordering
+      responses:
+        "200":
+          description: status code and a list of Books returned in alphabetical order
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Book'
+definitions:
+  Book:
+    type: object
+    description: This Book object defined below is used for the transactions in the app
+    properties:
+      author:
+        type: string
+      title:
+        type: string
+      genre:
+        type: string
+      numberofpages:
+        type: integer
+      language:
+        type: string
+      booked:
+        type: boolean

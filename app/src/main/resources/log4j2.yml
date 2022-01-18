@@ -4,9 +4,9 @@ Configuration:
   Properties:
     Property:
       - name: basePath
-        value: '$${env:APP_LOG_ROOT:D:\gitClonedProjects}'
+        value: 'D:\geoBookXchangerLog'
       - name: rootLogLevel
-        value: '$${env:APP_LOGGING_LOGLEVEL:-debug}'
+        value: '$${env:APP_LOGGING_LOGLEVEL:-info}'
 
   Appenders:
     Console:
@@ -16,7 +16,7 @@ Configuration:
         Pattern: '%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger{36} [%X{serviceName}] - %msg%n'
     RollingFile:
       name: StdOutRollingFile
-      fileName: ${basePath}/rest-api-project-stdout.log
+      fileName: ${basePath}/geo-book-xchanger-stdout.log
       filePattern: ${basePath}/rest-api-project-stdout-%d{yyyy-MM-dd}-%i.log.gz
       PatternLayout:
          Pattern: '%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger{36} [%X{serviceName}] - %msg%n'
