@@ -9,13 +9,13 @@ host: localhost:8080
 
 
 paths:
-  /add:
+  /addbook:
     post:
-      summary: Populates Book to the Database
       tags:
         - book
-      description: The purpose of the function is to accept an a request in json format and populates it
-       to the DB as ajava object
+      summary: Populates Book to the Database
+      description: The purpose of the function is to accept a request in json format and populates it
+       to the DB as a java object
       operationId: addNewBook
       produces:
         - application/json
@@ -51,13 +51,13 @@ paths:
           description: status code along with the requested object is being send back in json format
           schema:
             $ref: '#/definitions/Book'
-  /all:
+  /getallbooks:
     get:
       tags:
         - book
       summary: Get list of Books
       description: This function returns a list of Books
-      operationId: getAllUsers
+      operationId: getAllBooks
       produces:
         - application/json
       responses:
@@ -67,7 +67,7 @@ paths:
             type: array
             items:
               $ref: '#/definitions/Book'
-  /delete/{bookId}:
+  /deletebook/{bookId}:
     delete:
       tags:
         - book
@@ -88,12 +88,12 @@ paths:
           description: status code 201 returned indicates that the transactions was succesful but no response needed
           schema:
             $ref: '#/definitions/Book'
-  /update/{bookId}:
+  /updatebook/{bookId}:
     put:
       tags:
         - book
       summary: update an existing record
-      description: This fucnion updates an existing Book object based on its id value
+      description: This function updates an existing Book object based on its id value
       operationId: updateBook
       produces:
         - application/json
@@ -136,6 +136,63 @@ paths:
             type: array
             items:
               $ref: '#/definitions/Book'
+  /adduser:
+    post:
+      tags:
+        - user
+      summary: Create user
+      description: Populate a user entity into the database
+      operationId: addNewUser
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: user
+          description: the user object to create
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        "200":
+          description: Book is being successfully populated to the database
+          schema:
+            $ref: '#/definitions/User'
+  /getalluser:
+    get:
+      tags:
+        - user
+      summary: get all users from DB
+      description: This function returns a list of Users
+      operationId: getAllUsers
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: status code along with the requested list of users is being send back in json format
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/User'
+  /getuserbyname/{username}:
+    get:
+      tags:
+        - user
+      summary: returns a user based on it's name field
+      description: This function sends back a User object requested based on it's name property
+      operationId: getUserByName
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: username
+          type: string
+          description: name of the User object
+          required: true
+      responses:
+        "200":
+          description: status code along with the requested user object is being send back in json format
+          schema:
+            $ref: '#/definitions/User'
+
 definitions:
   Book:
     type: object
@@ -153,3 +210,10 @@ definitions:
         type: string
       booked:
         type: boolean
+  User:
+    type: object
+    description: User object defined below used for real world users
+    properties:
+      name:
+        type: string
+

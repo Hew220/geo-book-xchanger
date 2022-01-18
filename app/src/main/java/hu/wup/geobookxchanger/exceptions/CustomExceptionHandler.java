@@ -29,4 +29,22 @@ public class CustomExceptionHandler {
         return new ResponseEntity<>(errorResponse, conflict);
     }
 
+    @ExceptionHandler(value = {UserNotFoundException.class})
+    public ResponseEntity<Object> handleUserNotFoundException(UserNotFoundException ex) {
+            HttpStatus notFound = HttpStatus.NOT_FOUND;
+            ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(),
+                    notFound,
+                    ZonedDateTime.now(ZoneId.of("Z")));
+            return new ResponseEntity<>(errorResponse, notFound);
+    }
+
+    @ExceptionHandler(value = {UserIsAlreadyExist.class})
+    public ResponseEntity<Object> handleUserNotFoundException(UserIsAlreadyExist ex) {
+            HttpStatus conflict = HttpStatus.CONFLICT;
+            ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(),
+                    conflict,
+                    ZonedDateTime.now(ZoneId.of("Z")));
+            return new ResponseEntity<>(errorResponse, conflict);
+    }
+
 }

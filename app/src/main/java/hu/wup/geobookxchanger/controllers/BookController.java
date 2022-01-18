@@ -14,7 +14,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping(path = "/")
+@RequestMapping(path = "/book")
 public class BookController implements BookApi {
 
     private final BookService bookService;
@@ -39,10 +39,11 @@ public class BookController implements BookApi {
     }
 
     @Override
-    public @ResponseBody ResponseEntity<List<Book>> getAllUsers() {
-        Iterable<Book> iterable = bookService.getAllBooks();
-        return new ResponseEntity<>((List<Book>)iterable, HttpStatus.OK);
+    public ResponseEntity<List<Book>> getAllBooks() {
+        List<Book> listOfBooks = bookService.getAllBooks();
+        return new ResponseEntity<>(listOfBooks, HttpStatus.OK);
     }
+
 
     @Override
     public ResponseEntity<Book> getBookById(@PathVariable Long bookId) {
