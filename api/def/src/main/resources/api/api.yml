@@ -192,7 +192,31 @@ paths:
           description: status code along with the requested user object is being send back in json format
           schema:
             $ref: '#/definitions/User'
-
+  /addbooktouser:
+    post:
+      tags:
+        - user
+      summary: add book to user
+      description: thid function adds a specific book to the user
+      operationId: addBookToUser
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: username
+          type: string
+          required: true
+          description: name of the user object
+        - in: query
+          name: title
+          type: string
+          required: true
+          description: name to the specific book to bind to the user object
+      responses:
+        "200":
+          description: status code along with the specific book object
+          schema:
+            $ref: '#/definitions/User'
 definitions:
   Book:
     type: object

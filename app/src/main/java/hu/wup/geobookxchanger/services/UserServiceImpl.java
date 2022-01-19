@@ -1,7 +1,9 @@
 package hu.wup.geobookxchanger.services;
 
+import hu.wup.geobookxchanger.exceptions.BookNotFoundException;
 import hu.wup.geobookxchanger.exceptions.UserIsAlreadyExist;
 import hu.wup.geobookxchanger.exceptions.UserNotFoundException;
+import hu.wup.geobookxchanger.model.Book;
 import hu.wup.geobookxchanger.model.User;
 import hu.wup.geobookxchanger.repositories.UserRepository;
 import org.springframework.stereotype.Service;
@@ -14,23 +16,13 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final BookService bookService;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, BookService bookService) {
         this.userRepository = userRepository;
+        this.bookService = bookService;
     }
 
-    @Override
-    public User getUserById(Long userId) {
-        Optional<User> userOptional = userRepository.findById(userId);
-        User existingUser;
-        if (userOptional.isPresent()) {
-            existingUser = userOptional.get();
-        }else {
-            throw new UserNotFoundException("User has not been found by this id: " + userId);
-        }
-
-        return existingUser;
-    }
 
     @Override
     public User getUserByName(String name) {
@@ -54,7 +46,21 @@ public class UserServiceImpl implements UserService {
         if(existingUser == null) {
             userRepository.save(user);
         }else {
-            throw new UserIsAlreadyExist("User is being registered by the name: " + user.getName());
+            throw new UserIsAlreadyExist("User is being registered by this name: " + user.getName());
+        }
+    }
+
+    @Override
+    public void updateSetOfBooks(String username, String title) {
+        User existingUser = getUserByName(username);
+        Book existingBook = bookService.getBookByTitle(title);
+        if (existingUser == null) {
+            throw new UserNotFoundException("User has not been found by this username: " + username);
+        }else if(existingBook == null) {
+            throw new BookNotFoundException("Book has not been found by this title " + title);
+        }else {
+            existingUser.getBooks().add(existingBook);
+            userRepository.save(existingUser);
         }
     }
 

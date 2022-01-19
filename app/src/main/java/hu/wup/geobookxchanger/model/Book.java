@@ -1,9 +1,14 @@
 package hu.wup.geobookxchanger.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -19,6 +24,10 @@ public class Book {
     private int numberOfPages;
     private String language;
     private boolean isBooked;
+
+    @ManyToMany(mappedBy = "books")
+    @JsonIgnore
+    private Set<User> users = new HashSet<>();
 
     public Book() {
     }
@@ -81,5 +90,13 @@ public class Book {
 
     public void setBooked(boolean booked) {
         isBooked = booked;
+    }
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
 }
