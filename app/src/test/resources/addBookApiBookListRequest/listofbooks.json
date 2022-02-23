@@ -1,0 +1,24 @@
+{
+  "books": [{
+    "id": 1,
+    "author": "Stephen King",
+    "title": "carrie",
+    "genre": "Horror",
+    "numberOfPages": 460,
+    "language": "english"
+  },{
+    "id": 2,
+    "author": "Stephen King",
+    "title": "it",
+    "genre": "Horror",
+    "numberOfPages": 520,
+    "language": "english"
+  },{
+    "id": 3,
+    "author": "Stephen King",
+    "title": "maggie",
+    "genre": "Horror",
+    "numberOfPages": 460,
+    "language": "english"
+  }]
+}

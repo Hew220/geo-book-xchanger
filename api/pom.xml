@@ -6,12 +6,12 @@
     <packaging>pom</packaging>
 
     <parent>
-        <groupId>hu.wup.geobookxchanger</groupId>
-        <artifactId>geo-book-xchanger</artifactId>
+        <groupId>hu.wup.geobookxchanger.gw</groupId>
+        <artifactId>geo-book-xchanger-gw</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>geo-book-xchanger-api</artifactId>
+    <artifactId>geo-book-xchanger-gw-api</artifactId>
 
     <modules>
         <module>def</module>

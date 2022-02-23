@@ -5,8 +5,8 @@
 	<modelVersion>4.0.0</modelVersion>
 	<packaging>pom</packaging>
 	<modules>
-		<module>app</module>
 		<module>api</module>
+		<module>app</module>
 	</modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -15,30 +15,44 @@
 		<relativePath/>
 		<!-- lookup parent from repository -->
 	</parent>
-	<groupId>hu.wup.geobookxchanger</groupId>
-	<artifactId>geo-book-xchanger</artifactId>
+	<groupId>hu.wup.geobookxchanger.gw</groupId>
+	<artifactId>geo-book-xchanger-gw</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
-	<name>geo-book-xchanger</name>
-	<description>geo-book-xchanger</description>
+
+	<name>geo-book-xchanger-gw</name>
+	<description>geo-book-xchanger-gw</description>
+
 	<properties>
 		<java.version>11</java.version>
+		<gbx-ms.version>1.0.0-SNAPSHOT</gbx-ms.version>
 	</properties>
+
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
-				<groupId>hu.wup.geobookxchanger</groupId>
-				<artifactId>geo-book-xchanger-api-rest</artifactId>
+				<groupId>hu.wup.geobookxchanger.gw</groupId>
+				<artifactId>geo-book-xchanger-gw-api-rest</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>hu.wup.geobookxchanger</groupId>
-				<artifactId>geo-book-xchanger-api-def</artifactId>
+				<groupId>hu.wup.geobookxchanger.gw</groupId>
+				<artifactId>geo-book-xchanger-gw-api-def</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>hu.wup.geobookxchanger</groupId>
-				<artifactId>geo-book-xchanger-app</artifactId>
+				<groupId>hu.wup.geobookxchanger.gw</groupId>
+				<artifactId>geo-book-xchanger-gw-app</artifactId>
 				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>hu.wup.geobookxchanger.ms</groupId>
+				<artifactId>geo-book-xchanger-ms-api-rest</artifactId>
+				<version>${gbx-ms.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>hu.wup.geobookxchanger.ms</groupId>
+				<artifactId>geo-book-xchanger-ms-api-rest-client</artifactId>
+				<version>${gbx-ms.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

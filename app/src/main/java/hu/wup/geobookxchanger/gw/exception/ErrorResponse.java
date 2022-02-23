@@ -1,4 +1,4 @@
-package hu.wup.geobookxchanger.exceptions;
+package hu.wup.geobookxchanger.gw.exception;
 
 import org.springframework.http.HttpStatus;
 
@@ -6,11 +6,14 @@ import java.time.ZonedDateTime;
 
 public class ErrorResponse {
 
-    private final String message;
-    private final HttpStatus status;
-    private final ZonedDateTime timeStamp;
+    private  String message;
+    private int status;
+    private ZonedDateTime timeStamp;
 
-    public ErrorResponse(String message, HttpStatus status, ZonedDateTime timeStamp) {
+    public ErrorResponse() {
+    }
+
+    public ErrorResponse(String message, int status, ZonedDateTime timeStamp) {
         this.message = message;
         this.status = status;
         this.timeStamp = timeStamp;
@@ -20,7 +23,7 @@ public class ErrorResponse {
         return message;
     }
 
-    public HttpStatus getStatus() {
+    public int getStatus() {
         return status;
     }
 

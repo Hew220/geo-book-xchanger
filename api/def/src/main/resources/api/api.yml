@@ -4,240 +4,102 @@ info:
   title: General Api
   description: 'Contract for the application'
 
-host: localhost:8080
-
-
+host: localhost:8082
 
 paths:
-  /addbook:
-    post:
-      tags:
-        - book
-      summary: Populates Book to the Database
-      description: The purpose of the function is to accept a request in json format and populates it
-       to the DB as a java object
-      operationId: addNewBook
-      produces:
-        - application/json
-      parameters:
-        - in: body
-          name: book
-          description: the book to create.
-          schema:
-            $ref: '#/definitions/Book'
-      responses:
-        '200':
-          description: Book is being successfully populated to the database
-          schema:
-            $ref: '#/definitions/Book'
-  /getbook/{bookId}:
+  /getlistofbookbyuser/{userId}:
     get:
       tags:
-        - book
-      summary: Returns a Book based on its id value
-      description: This function sends back a Book object requested based on its id value
-      operationId: getBookById
+        - bookHistory
+      summary: get list of books for specific user
+      description: purpose of this function is to get a list books attached to a specific user
+      operationId: getBooksByUser
       produces:
         - application/json
       parameters:
         - in: path
-          name: bookId
+          name: userId
           type: integer
           format: int64
-          description: the id of the object
+          description: the id of the user object
           required: true
       responses:
-        '200':
-          description: status code along with the requested object is being send back in json format
-          schema:
-            $ref: '#/definitions/Book'
-  /getallbooks:
-    get:
-      tags:
-        - book
-      summary: Get list of Books
-      description: This function returns a list of Books
-      operationId: getAllBooks
-      produces:
-        - application/json
-      responses:
-        "200":
-          description: status code along with the requested list of books is being send back in json format
+        200:
+          description: returns a list of books binds to a specific user
           schema:
             type: array
             items:
               $ref: '#/definitions/Book'
-  /deletebook/{bookId}:
-    delete:
-      tags:
-        - book
-      summary: Delete Book from DB
-      description: This function deletes the Book object from the corresponding database
-      operationId: deleteBook
-      produces:
-        - application/json
-      parameters:
-        - in: path
-          name: bookId
-          type: integer
-          format: int64
-          description: the id of the object to be deleted
-          required: true
-      responses:
-        "201":
-          description: status code 201 returned indicates that the transactions was succesful but no response needed
-          schema:
-            $ref: '#/definitions/Book'
-  /updatebook/{bookId}:
-    put:
-      tags:
-        - book
-      summary: update an existing record
-      description: This function updates an existing Book object based on its id value
-      operationId: updateBook
-      produces:
-        - application/json
-      parameters:
-        - in: path
-          name: bookId
-          type: integer
-          format: int64
-          description: the id of the object to be updated
-          required: true
-        - in: body
-          name: book
-          description: the Book object that you'll update your DB record with
-          schema:
-            $ref: '#/definitions/Book'
-      responses:
-        "200":
-          description: status code along with the updated book retuns in json format
-          schema:
-            $ref: '#/definitions/Book'
-  /sortbookbytitle:
-    get:
-      tags:
-        - book
-      summary: returns a list of Books asc/desc order
-      description: This function returns a list of books sorted by title either ascending or descending order
-      operationId: sortBooksByTitle
-      produces:
-        - application/json
-      parameters:
-        - in: query
-          name: title
-          type: string
-          required: true
-          description: query parameter which can be either asc or desc indicating the direction of the ordering
-      responses:
-        "200":
-          description: status code and a list of Books returned in alphabetical order
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/Book'
-  /adduser:
+
+  /hidebookbyuser:
     post:
       tags:
-        - user
-      summary: Create user
-      description: Populate a user entity into the database
-      operationId: addNewUser
+        - bookHistory
+      summary: hide a specific book
+      description: purpose of this function is to hide a specific book for a user
+      operationId: hideBookByUser
       produces:
         - application/json
       parameters:
         - in: body
-          name: user
-          description: the user object to create
+          name: bookHistory
+          description: name of the bookhistory object to hide
           schema:
-            $ref: '#/definitions/User'
+            $ref: '#/definitions/HideBookHistoryRequestGW'
       responses:
-        "200":
-          description: Book is being successfully populated to the database
-          schema:
-            $ref: '#/definitions/User'
-  /getalluser:
-    get:
-      tags:
-        - user
-      summary: get all users from DB
-      description: This function returns a list of Users
-      operationId: getAllUsers
-      produces:
-        - application/json
-      responses:
-        "200":
-          description: status code along with the requested list of users is being send back in json format
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/User'
-  /getuserbyname/{username}:
-    get:
-      tags:
-        - user
-      summary: returns a user based on it's name field
-      description: This function sends back a User object requested based on it's name property
-      operationId: getUserByName
-      produces:
-        - application/json
-      parameters:
-        - in: path
-          name: username
-          type: string
-          description: name of the User object
-          required: true
-      responses:
-        "200":
-          description: status code along with the requested user object is being send back in json format
-          schema:
-            $ref: '#/definitions/User'
-  /addbooktouser:
-    post:
-      tags:
-        - user
-      summary: add book to user
-      description: thid function adds a specific book to the user
-      operationId: addBookToUser
-      produces:
-        - application/json
-      parameters:
-        - in: query
-          name: username
-          type: string
-          required: true
-          description: name of the user object
-        - in: query
-          name: title
-          type: string
-          required: true
-          description: name to the specific book to bind to the user object
-      responses:
-        "200":
+        200:
           description: status code along with the specific book object
           schema:
-            $ref: '#/definitions/User'
+            $ref: '#/definitions/HideBookHistoryResponseGW'
 definitions:
+  HideBookHistoryRequestGW:
+    type: object
+    description: Request object for a user to hide a specific book
+    properties:
+      userId:
+        type: integer
+        format: int64
+      bookId:
+        type: integer
+        format: int64
+      location:
+        type: string
+      description:
+        type: string
+      bookStatus:
+        type: string
+        enum:
+          - owned
+          - hidden
+  HideBookHistoryResponseGW:
+    type: object
+    description: Response object for a user
+    properties:
+      userId:
+        type: integer
+        format: int64
+      bookId:
+        type: integer
+        format: int64
+      location:
+        type: string
+      description:
+        type: string
   Book:
     type: object
     description: This Book object defined below is used for the transactions in the app
     properties:
+      id:
+        type: integer
+        format: int64
       author:
         type: string
       title:
         type: string
       genre:
         type: string
-      numberofpages:
+      numberOfPages:
         type: integer
       language:
-        type: string
-      booked:
-        type: boolean
-  User:
-    type: object
-    description: User object defined below used for real world users
-    properties:
-      name:
         type: string
 
